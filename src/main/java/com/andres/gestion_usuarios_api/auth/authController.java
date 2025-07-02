@@ -20,4 +20,9 @@ public class authController {
         System.out.println(authRequest.getClave());
         return ResponseEntity.ok(authService.registrar(authRequest));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
+        return ResponseEntity.ok(authService.login(authRequest));
+    }
 }
