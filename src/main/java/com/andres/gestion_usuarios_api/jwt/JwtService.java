@@ -34,6 +34,10 @@ public class JwtService {
                 .getBody()
                 .getSubject();
     }
+    public boolean esTokenValido(String token, UsuarioEntity usuario) {
+        String username = extraerNombreUsuario(token);
+        return username.equals(usuario.getNombre()) && !estaExpirado(token);
+    }
 
     public boolean estaExpirado(String token){
         Date expiration = Jwts.parserBuilder()

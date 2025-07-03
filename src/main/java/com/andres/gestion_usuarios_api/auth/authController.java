@@ -1,5 +1,7 @@
 package com.andres.gestion_usuarios_api.auth;
 
+import com.andres.gestion_usuarios_api.DTO.RegistrarDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +17,10 @@ public class authController {
     private final AuthService authService;
 
     @PostMapping("/registrar")
-    public ResponseEntity<AuthResponse> registrar(@RequestBody AuthRequest authRequest) {
-        System.out.println(authRequest.getNombre());
-        System.out.println(authRequest.getClave());
-        return ResponseEntity.ok(authService.registrar(authRequest));
+    public ResponseEntity<AuthResponse> registrar(@RequestBody @Valid RegistrarDTO dto) {
+        System.out.println(dto.getNombre());
+        System.out.println(dto.getClave());
+        return ResponseEntity.ok(authService.registrar(dto));
     }
 
     @PostMapping("/login")
