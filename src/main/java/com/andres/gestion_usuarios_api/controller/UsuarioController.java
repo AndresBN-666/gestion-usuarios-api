@@ -1,16 +1,19 @@
 package com.andres.gestion_usuarios_api.controller;
 
+import com.andres.gestion_usuarios_api.DTO.ActualizarPerfilDTO;
+import com.andres.gestion_usuarios_api.DTO.PerfilUsuarioDTO;
+import com.andres.gestion_usuarios_api.DTO.UsuarioDTO;
 import com.andres.gestion_usuarios_api.entity.UsuarioEntity;
 import com.andres.gestion_usuarios_api.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,7 +38,7 @@ public class UsuarioController {
     )
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public ResponseEntity<List<UsuarioEntity>> listarTodosLosUsuarios() {
+    public ResponseEntity<List<UsuarioDTO>> listarTodosLosUsuarios() {
         return ResponseEntity.ok(usuarioService.listarTodos());
     }
 
@@ -44,6 +47,28 @@ public class UsuarioController {
     public ResponseEntity<UsuarioEntity> verMiPerfil(Authentication auth) {
         UsuarioEntity usuario = (UsuarioEntity) auth.getPrincipal();
         return ResponseEntity.ok(usuario);
+    }
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PutMapping("/perfil")
+    public ResponseEntity<String> actualizarPerfil(@RequestBody @Valid ActualizarPerfilDTO dto){
+        usuarioService.actualizarPerfil(dto);
+        return ResponseEntity.ok("Usuario actualizado correctamente");
+    }
+
+
+    @GetMapping("/verPerfil")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public ResponseEntity<PerfilUsuarioDTO> verPerfil(){
+        return ResponseEntity.ok(usuarioService.obtenerPerfil());
+    }
+
+    @PostMapping("/crear")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<UsuarioDTO> crearUsuario(UsuarioDTO dto){
+        UsuarioDTO usuario = usuarioService.crearUsuario(dto);
+        return new ResponseEntity<>(usuario, HttpStatus.CREATED);
+
     }
 
 }
