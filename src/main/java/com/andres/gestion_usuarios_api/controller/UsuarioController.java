@@ -68,7 +68,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> crearUsuario(UsuarioDTO dto){
         UsuarioDTO usuario = usuarioService.crearUsuario(dto);
         return new ResponseEntity<>(usuario, HttpStatus.CREATED);
-
     }
+
 
 }
