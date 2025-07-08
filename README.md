@@ -44,5 +44,13 @@ Este proyecto es una API REST construida con Spring Boot para la gestión de usu
    ```bash
    git clone https://github.com/AndresBN-666/gestion-usuarios-api.git
     cd gestion-usuarios-api
-```
+   ```
+2. Configura tu base de datos en application.properties (MySQL, schema gestion_citas).
+
+3. Ejecuta con Maven o desde tu IDE.
+
+4. Abre Swagger: http://localhost:8080/swagger-ui.html.
+
+Andrés Bárcena Neyra
+Backend Developer
 
