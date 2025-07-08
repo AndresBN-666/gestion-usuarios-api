@@ -22,7 +22,7 @@ public class AuthService {
             throw new RuntimeException("El nombre ya existe");
         }
 
-        UsuarioEntity usuario = new UsuarioEntity().builder()
+        UsuarioEntity usuario = UsuarioEntity.builder()
                 .nombre(dto.getNombre())
                 .clave(passwordEncoder.encode(dto.getClave()))
                 .rol(dto.getRol() != null ? dto.getRol() : Rol.USER)
